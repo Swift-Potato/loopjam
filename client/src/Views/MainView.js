@@ -3,10 +3,8 @@ define([
   'Models/AppModel',
   'Views/NavView',
   'Views/AppView',
-  'Views/TrackView',
-  'text!templates/UsersTracksViewTemplate.html'
-
-], function(template, AppModel, NavView, AppView, TrackView, UsersTracksTemplate){
+  'Views/TrackView'
+], function(template, AppModel, NavView, AppView, TrackView){
   var MainView = Backbone.View.extend({
 
     initialize: function(){
@@ -22,21 +20,7 @@ define([
       this.$el.html(this.template());
       // attach navBar
       var navView = new NavView();
-      var userTrackModal = Handlebars.compile(UsersTracksTemplate);
       this.$el.find('.navBar').html(navView.render().el);
-      this.$el.find('.navBar').find('.users-tracks').html(userTrackModal());
-
-      this.$el.find('#table').bootstrapTable({
-        url: '/tracks',
-        responseHandler: function(d) {
-          for (var i = 0; i < d.length; i++) {
-            var trackname = d[i]['trackname'].toString();
-            var trackID = d[i]['trackID'].toString();
-            d[i]['trackname'] = '<a href="/#/tracks/' + trackID + '">' + trackname + ' </a> ';
-          }
-          return d;
-        }
-      });
       return this;
     },
     renderAppView: function(){
