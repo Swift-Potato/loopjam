@@ -31,7 +31,7 @@ Tracks.belongsTo(Users);
 sequelize.sync();
 
 //Check connection to database
-sequelize.authenticate().complete(function(err) {
+sequelize.authenticate().then(function(err) {
     if (!!err) {
       console.log('Unable to connect to the database:', err)
     } else {
