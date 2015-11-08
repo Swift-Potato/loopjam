@@ -93,19 +93,18 @@ define([
           </path> \
         </svg> \
       </div>'
-      $(this.el).find('.saved-body').html(savingAnimation); 
+      $(this.el).find('.saved-body').html(savingAnimation);
     },
-
     modalShowShare: function(){
       var hashURL = this.model.get('hashURL');
       var trackName = this.model.get('trackName');
       var modalTitle = '<i class="fa fa-save"></i> Save Complete'
-      var modalBody = '<h5> Share your track</h5><p><div class="fb-share-button" data-href="http://www.loopjam.in/#/tracks/' + hashURL + '" data-layout="link" title="Facebook"><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x"></i></span></div> <div href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.loopjam.in/#/tracks/' + hashURL + '" data-text="I made a jam called ' + trackName + ', check it out!" data-count="none">Tweet:<span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x"></i></span></div></p><a target="_blank" href="http://www.loopjam.in/#/tracks/' + hashURL + '" class="trackURL">URL: loopjam.in/#/tracks/' + hashURL + '</a>';
-      var modalFooter = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'    
+      var modalBody = '<h5> Share your track</h5><p>' +'<div class="fb-share-button"><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.loopjam.in/#/tracks/' + hashURL + '" target=_blank><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x"></i></span><a></div> ' + '<div class="twitter-share-button"><a href="https://twitter.com/share?url=http://www.loopjam.in/#/tracks/' +  hashURL +'" target=_blank><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x"></i></span><a></div> '  + '</p><a target="_blank" href="http://www.loopjam.in/#/tracks/' + hashURL + '" class="trackURL">URL: loopjam.in/#/tracks/' + hashURL + '</a>';
+      var modalFooter = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
       $(this.el).find('.saved-title').html(modalTitle);
-      
-      $(this.el).find('.saved-body').html(modalBody); 
-      $(this.el).find('.saved-footer').html(modalFooter);    
+
+      $(this.el).find('.saved-body').html(modalBody);
+      $(this.el).find('.saved-footer').html(modalFooter);
     },
 
     disableSave: function() {
@@ -120,5 +119,6 @@ define([
   });
 
   return TrackInfoView;
+
 
 });
