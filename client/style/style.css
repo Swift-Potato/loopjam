@@ -108,9 +108,9 @@ body{
 }
 
 .sideBar{
-  padding:25px; 
-  background-color:#1C2932; 
-  margin-top:-40px; 
+  padding:25px;
+  background-color:#1C2932;
+  margin-top:-40px;
   background:#273A47;
 }
 
@@ -140,14 +140,14 @@ h1, h2, h3, h4{
   margin-top:10px;
 }*/
 
-/*ul { 
-  list-style: none; 
+/*ul {
+  list-style: none;
 }
 
 
 #recordingslist audio {
- display: block; margin-bottom: 10px; 
-} 
+ display: block; margin-bottom: 10px;
+}
 */
 
 .modal-content {
@@ -221,7 +221,7 @@ h1, h2, h3, h4{
  }
 
 .btn-record:hover {
-  fill: #EC4F43; 
+  fill: #EC4F43;
   opacity:1;
 }
 
@@ -539,13 +539,13 @@ h1, h2, h3, h4{
   bottom: 0;
   right: 40px;
     -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
-    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
     margin-left: 0;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px; 
+    right: 0px;
 }
 
 .onoffswitch-visualizer {
@@ -575,9 +575,9 @@ h1, h2, h3, h4{
 /*  Vertical Sliders */
 
 .slider-text{
-  border:0px; 
-  color:#f6931f; 
-  font-weight:bold; 
+  border:0px;
+  color:#f6931f;
+  font-weight:bold;
   width:35px
 }
 
@@ -613,4 +613,8 @@ h1, h2, h3, h4{
 }
 
 .panel-default{
+}
+
+.fb-share-button, .twitter-share-button{
+  display: inline-block;
 }
