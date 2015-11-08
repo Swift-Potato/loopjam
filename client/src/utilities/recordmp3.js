@@ -1,6 +1,6 @@
 define([
-], 
-function(){ 
+],
+function(){
 
   var WORKER_PATH = 'src/utilities/recorderWorker.js';
 
@@ -69,28 +69,28 @@ function(){
         portNum: portNum
       });
     }
-	
+
   	//Mp3 conversion
     worker.onmessage = function(e){
       // We move this here to allow multiple mp3 conversion to be allowed at the same time.
       var encoderWorker = new Worker('src/utilities/mp3Worker.js');
       var portNum = e.data.portNum;
       var blob = e.data.audioBlob;
-	  
+
   	  var arrayBuffer;
   	  var fileReader = new FileReader();
-  	  
+
   	  fileReader.onload = function(){
     		arrayBuffer = this.result;
     		var buffer = new Uint8Array(arrayBuffer),
             data = parseWav(buffer);
-            
+
     		console.log("Converting to Mp3");
         track.set('converting', track.get('converting') + 1);
         track.trigger('disableSave');
 
-        encoderWorker.postMessage({ 
-          cmd: 'init', 
+        encoderWorker.postMessage({
+          cmd: 'init',
           config:{
             mode : 3,
     			  channels:1,
@@ -99,11 +99,11 @@ function(){
           }
         });
 
-        encoderWorker.postMessage({ 
-          cmd: 'encode', 
-          buf: Uint8ArrayToFloat32Array(data.samples) 
+        encoderWorker.postMessage({
+          cmd: 'encode',
+          buf: Uint8ArrayToFloat32Array(data.samples)
         });
-        encoderWorker.postMessage({ 
+        encoderWorker.postMessage({
           cmd: 'finish'
         });
 
@@ -115,24 +115,23 @@ function(){
             if (track.get('converting') === 0) {
               track.trigger('enableSave');
             }
-      			console.log ("The Mp3 data " + e.data.buf);
       			var mp3Blob = new Blob([new Uint8Array(e.data.buf)], {type: 'audio/mp3'});
-      			
+
       			var url = 'data:audio/mp3;base64,'+encode64(e.data.buf);
             // push to DOM, so main thread can retrieve it.
             $('.mp3blobData').text(url);
             $('.loopNodePort').text(portNum);
             $('.mp3Blob').trigger('newmp3');
-  				
+
           }
         };
   	  };
-	  
+
 	  fileReader.readAsArrayBuffer(blob);
     currCallback(blob);
     }
-	
-	
+
+
   	function encode64(buffer) {
   		var binary = '',
   			bytes = new Uint8Array( buffer ),
@@ -175,7 +174,7 @@ function(){
   		}
   		return f32Buffer;
   	}
-	
+
     // Uploads data via POST request after finishing encoding audio file
   	function uploadAudio(mp3Data){
       // console.log("finished Encoding")
@@ -197,10 +196,10 @@ function(){
   				//console.log(data);
   				// log.innerHTML += "\n" + data;
   			});
-  		};      
+  		};
   		reader.readAsDataURL(mp3Data);
   	}
-	
+
     source.connect(this.node);
     this.node.connect(this.context.destination);    //this should not be necessary
   };

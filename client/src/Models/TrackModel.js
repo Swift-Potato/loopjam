@@ -4,8 +4,8 @@ define([
  'recorder',
  'Collections/LoopNodeCollection',
  'Models/LoopNodeModel'
-], 
-function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){ 
+],
+function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
   var TrackModel = Backbone.Model.extend({
       defaults: {
       context: null,
@@ -39,7 +39,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
       this.set('loopNodes', loopNodesForTrack)
 
       // By default, select the first loopnode.
-      this.set('selectedLoopNode', this.get('loopNodes').models[0]);      
+      this.set('selectedLoopNode', this.get('loopNodes').models[0]);
       // event listener for loopNode selection
       this.get('loopNodes').on('selected', function(selectedLoopNode){
         this.set('selectedLoopNode', selectedLoopNode);
@@ -49,15 +49,15 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
       this.setAnalyser();
 
       this.get('loopNodes').on("record", function(currentLoop){
-        this.recorderDelay(currentLoop);     
+        this.recorderDelay(currentLoop);
       }.bind(this))
 
       this.get('loopNodes').on("queue", function(currentLoop){
-        this.queue(currentLoop);     
+        this.queue(currentLoop);
       }.bind(this))
 
       this.get('loopNodes').on("pause", function(currentLoop){
-        this.pause(currentLoop);     
+        this.pause(currentLoop);
       }.bind(this))
 
       this.get('loopNodes').on('removeLoopNode', function(currentLoop){
@@ -92,11 +92,11 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
       // this.set('animationTimer', d3.timer(params.loopNodes.updateAnimationPosition(this.get('tempo'), this.get('tempoAdjustment'), this.get('context').currentTime)));
     },
 
-    setAudioContext: function() { 
-      var contextClass = (window.AudioContext || 
-      window.webkitAudioContext || 
-      window.mozAudioContext || 
-      window.oAudioContext || 
+    setAudioContext: function() {
+      var contextClass = (window.AudioContext ||
+      window.webkitAudioContext ||
+      window.mozAudioContext ||
+      window.oAudioContext ||
       window.msAudioContext);
 
       if (contextClass) {
@@ -108,7 +108,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
                          navigator.webkitGetUserMedia ||
                          navigator.mozGetUserMedia ||
                          navigator.msGetUserMedia);
-        
+
 
         navigator.getUserMedia({audio: true}, this.startUserMedia.bind(this), function(e) {
           console.log('No live audio input: ' + e);
@@ -120,14 +120,14 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
 
         window.URL = window.URL || window.webkitURL
 
-   
-        //buffer is loaded and added to each loop node as 'buffer' attribute 
+
+        //buffer is loaded and added to each loop node as 'buffer' attribute
 
         this.get('loopNodes').forEach(function(loopNode){
           var bufferLoader = new BufferLoader(this.get('context'));
           bufferLoader.loadBuffer(loopNode);
         }.bind(this));
-        
+
         // this.set('', this.get('bufferLoader').bufferList.splice(0,1));
 
       } else {
@@ -142,10 +142,10 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
         var input = this.get('context').createMediaStreamSource(stream);
         console.log('Media stream created.' );
         console.log("input sample rate " +input.context.sampleRate);
-        
+
         // input.connect(context.destination);
         console.log('Input connected to audio context destination.');
-        
+
 
 
         this.set('recorder', new Recorder(input, null, this));
@@ -175,7 +175,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
         var ctx = this.get('bgFreqCanvasCtx');
         var canvas = this.get('bgFreqCanvas');
         var colWidth = Math.ceil(canvas.width() / (0.85 * analyser.frequencyBinCount));
-        
+
         analyser.getByteFrequencyData(frequencyData)
         ctx.clearRect(0, 0, canvas.width(), canvas.height());
         var freq, xPos, yPos, width, height;
@@ -183,11 +183,11 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
         img.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAAEklEQVR4AWNsP/eaATcYlcYKANQJFotqqVYoAAAAAElFTkSuQmCC";
         ctx.fillStyle = ctx.createPattern(img, "repeat");
         for (var i = 0; i < analyser.frequencyBinCount; i++) {
-          freq = frequencyData[i] || 0; 
+          freq = frequencyData[i] || 0;
           xPos = colWidth * i;
-          yPos = canvas.height();   
+          yPos = canvas.height();
           width = colWidth - 1;
-          height = -(Math.floor(freq / 255 * canvas.height()) + 1); 
+          height = -(Math.floor(freq / 255 * canvas.height()) + 1);
           // var rand1 = Math.floor(Math.random() * 255);
           // var rand2 = Math.floor(Math.random() * 255);
           // var rand3 = Math.floor(Math.random() * 255);
@@ -205,7 +205,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
         var barTime = multiplier * util.calcBar(tempo);
         var currentTime = this.get('context').currentTime;
         var tempoAdjustment = this.get('tempoAdjustment');
-        
+
         currentLoop.set('speed', barTime);
         currentLoop.set('recordedAtBpm', tempo);
 
@@ -222,7 +222,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
         console.log("Record will start in:", delayInMilliseconds, "ms")
         console.log("Expected time of recording:", currentTime * 1000 + delayInMilliseconds, "ms")
         console.log("Record will stop in:", delayInMilliseconds + barTime * 1000, "ms")
-        
+
         var barTimeInMS = barTime * 1000;
 
         var startRecordTime = currentTime * 1000 + delayInMilliseconds - 20;
@@ -231,7 +231,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
 
         var startFlag = true;
         var stopFlag = false;
-        var bufferFlag = false;  
+        var bufferFlag = false;
 
         var bufferLoader = new BufferLoader(this.get('context'));
 
@@ -244,7 +244,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
           } else if (time >= stopRecordTime && stopFlag){
             this.stopRecording(currentLoop);
             stopFlag = false;
-            bufferFlag = true; 
+            bufferFlag = true;
           } else if (time >= loadBufferTime && bufferFlag){
             bufferLoader.loadBuffer(currentLoop);
             return true;
@@ -254,17 +254,17 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
 
         // setTimeout(this.startRecording.bind(this, currentLoop), delayInMilliseconds - 20)
         // setTimeout(this.stopRecording.bind(this, currentLoop), delayInMilliseconds + barTimeInMS + 50)
-        
+
         // var bufferLoader = new BufferLoader(this.get('context'));
         // bufferLoader.loadBuffer(this.get('metronomeNode'));
         // setTimeout(function(){
         //   bufferLoader.loadBuffer(currentLoop)
         // }, delayInMilliseconds + barTimeInMS + 300)
       },
-      
+
       startRecording: function(currentLoop) {
         console.log("time started recording:", this.get('context').currentTime)
-        
+
         var rerenderRecording = function(){
           currentLoop.set('queue', !currentLoop.get('queue'));
           currentLoop.set('recording', !currentLoop.get('recording'));
@@ -281,7 +281,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
       },
 
       stopRecording: function(currentLoop) {
-            
+
         console.log("time stopped recording:", this.get('context').currentTime)
         this.get('recorder') && this.get('recorder').stop();
         console.timeEnd("recording1");
@@ -308,12 +308,12 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
           var li = document.createElement('li');
           var au = document.createElement('audio');
           var hf = document.createElement('a');
-          
+
           currentLoop.set('url', url);
           console.log("where is URL",currentLoop.get('url'))
           // counter++;
 
-          
+
 
           // au.controls = true;
           // au.src = url;
@@ -335,7 +335,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
             }
           }
       },
-      
+
       setd3timer: function(){
         d3.timer(function(){
           this.CueAnimation();
@@ -361,7 +361,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
 
         var playOn = this.get('metronomePlaying');
 
-        var context = this.get('context'); 
+        var context = this.get('context');
         var currentTime = context.currentTime;
         var bar = util.calcBar(this.get('tempo'));
         var angularSpeed = util.calcSpeed(bar);
@@ -381,13 +381,13 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
           remainingDegree = 90 - degree;
           nextNoteTime = remainingDegree / angularSpeed + currentTime;
 
-          if(playOn){ 
+          if(playOn){
             osc = context.createOscillator();
-            osc.connect(context.destination);      
+            osc.connect(context.destination);
             osc.frequency.value = metLowFreq;
             osc.start(nextNoteTime);
             osc.stop(nextNoteTime + noteLength);
-          }   
+          }
 
           this.set('mFlag0', false);
           this.set('mFlag3', true);
@@ -395,39 +395,39 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
           remainingDegree = 180 - degree;
           nextNoteTime = remainingDegree / angularSpeed + currentTime;
 
-          if(playOn){        
+          if(playOn){
             osc = context.createOscillator();
-            osc.connect(context.destination);      
+            osc.connect(context.destination);
             osc.frequency.value = metLowFreq;
             osc.start(nextNoteTime);
             osc.stop(nextNoteTime + noteLength);
-          }   
+          }
 
           this.set('mFlag1', false);
         } else if(degree >= 180 && degree < 270 && mFlag2){
           remainingDegree = 270 - degree;
           nextNoteTime = remainingDegree / angularSpeed + currentTime;
 
-          if(playOn){        
+          if(playOn){
             osc = context.createOscillator();
-            osc.connect(context.destination);      
+            osc.connect(context.destination);
             osc.frequency.value = metHighFreq;
             osc.start(nextNoteTime);
             osc.stop(nextNoteTime + noteLength);
-          }   
+          }
 
           this.set('mFlag2', false);
         } else if(degree >= 270 && degree < 360 && mFlag3){
           remainingDegree = 360 - degree;
           nextNoteTime = remainingDegree / angularSpeed + currentTime;
 
-          if(playOn){        
+          if(playOn){
             osc = context.createOscillator();
-            osc.connect(context.destination);      
+            osc.connect(context.destination);
             osc.frequency.value = metLowFreq;
             osc.start(nextNoteTime);
             osc.stop(nextNoteTime + noteLength);
-          }   
+          }
 
           this.set('mFlag3', false);
           this.set('mFlag0', true);
@@ -450,7 +450,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
           degree = degree / 360
 
           // Recording && play flags for cursor
-          if((!loopNode.get('queue') && loopNode.get('recording') && !loopNode.get('playing') && !loopNode.get('recorded')) 
+          if((!loopNode.get('queue') && loopNode.get('recording') && !loopNode.get('playing') && !loopNode.get('recorded'))
             || (!loopNode.get('queue') && !loopNode.get('recording') && loopNode.get('playing') && loopNode.get('recorded'))){
             var arc = d3.svg.arc().innerRadius(60).outerRadius(100).startAngle(0);
           } else {
@@ -462,7 +462,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
           .style("fill", "#395567")
           .attr("d", arc);
           // $loopNodesClasses[i].val(degree).trigger('change');
-            
+
           }.bind(this));
       },
 
@@ -480,7 +480,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
           var currentSource = loopNode.get('source');
           if(currentSource){
             currentSource.playbackRate.value = parseInt(bpm) / loopNode.get('recordedAtBpm');
-          }    
+          }
         });
       },
 
@@ -517,7 +517,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
         var tempoAdjustment = this.get('tempoAdjustment');
         var mp3Multiplier = currentLoop.get('mp3Multiplier');
 
-        // The remainder tells us how much of the bartime we have 
+        // The remainder tells us how much of the bartime we have
         // completed thus far.
         var remainder = (currentTime - tempoAdjustment / 360 * util.calcBar(tempo))  % (multiplier * util.calcBar(tempo));
         console.log('currentTime:', currentTime);
@@ -542,7 +542,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
         console.log("tempBuffer: ", tempBuffer);
 
         source.buffer = createRotatedAudioBuffer(this.get('context'), tempBuffer, tempBuffer.duration - barTime * mp3Multiplier);
-        
+
         // Associate the new source instance with the loaded buffer.
 
         source.loop = true;
@@ -561,7 +561,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
         // Connect the source to the analyser, and then the analyser to the context destination
         var analyser = this.get('analyser');
         source.connect(analyser);
-      
+
 
         // Sets the playback rate to the value of bpm / rate of the bpm being recorded
         source.playbackRate.value = parseInt(tempo) / recordedAtBpm;
@@ -582,7 +582,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
 
         // console.log("activated: ", delayInMilliseconds)
         setTimeout(letViewsKnowQueueIsComplete, delayToChangeViews)
-        
+
         source.loopStart = 0;
         source.loopEnd = barTime;
         source.start(currentTime + delay);
@@ -596,11 +596,6 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
 
       pause: function(currentLoop) {
         var source = currentLoop.get('source');
-
-        // Instead of creating a new bufferSource as per usual,
-        // we retrieve the source that we have stored on our 
-        // data objects.
-        source.buffer = currentLoop.get('buffer');
         console.log('About to pause, logging source: ', source);
         source.stop();
       },
@@ -624,12 +619,12 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
         }
 
         var trackSaveCallback = function(URLArray){
-          
+
           this.trigger("modalShowWaiting");
           var counter = 0;
 
           var uploadSync = function(i){
-            var loopNode = this.get('loopNodes').where({port: i + 1})[0]; 
+            var loopNode = this.get('loopNodes').where({port: i + 1})[0];
             var url = loopNode.get('url');
             if(url !== "" && url.substr(url.length - 10) !== ".mp3Base64"){
               var mp3Data = loopNode.get('mp3Data');
@@ -649,11 +644,11 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
                   }
                   console.log(mp3Data, "accepted");
                 }.bind(this)
-              });            
+              });
             } else {
               uploadSync(i + 1);
               console.log("port ", loopNode.get('port'), " skipped");
-            }  
+            }
           }.bind(this)
 
           if(URLArray.length - 1){
@@ -665,7 +660,7 @@ function(BufferLoader, util, Recorder, LoopNodeCollection, LoopNodeModel){
           type: "POST",
           url: "tracks",
           data: trackData,
-            
+
           success: function(data){
             trackSaveCallback(data);
           }
