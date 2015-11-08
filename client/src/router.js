@@ -43,6 +43,8 @@ define([
     },
 
     loadMainView: function(){
+
+      $('html').css("background-color","#CFDEE5")
       // kill any running audiocontext
       if(this.track){
         this.track.get('context').close()
@@ -58,6 +60,9 @@ define([
       // Show All Tracks page
     },
     showTrackView: function(id){
+
+      $('html').css("background-color","#273A47");
+
       if(this.track){
         this.track.get('context').close()
       }

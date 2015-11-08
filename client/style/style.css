@@ -13,6 +13,31 @@
   Green: #56BA9A;
 */
 
+@media screen and (max-width: 1000px) {
+    body {
+        width:1000px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+
+.col-xs-6 {
+      width:100%;
+      left: 50px;
+    }
+
+  .save-container{
+    margin-left:-64px;
+  }
+
+  .loopnode-info{
+    left: 28px !important;
+  }
+
+
+}
+
+
 
 html, body
 {
@@ -31,10 +56,20 @@ display:inline-block;
   margin-left: -40px
 }
 
+.browser-alert{
+  text-align:center;
+  color:white;
+}
+
 .main-title-box{
-  margin-top: -25px;
-  text-align: center; 
-  background:#CFDEE5;
+    position: absolute;
+    text-align: center;
+    -webkit-transform: translateX(-50%) translatey(-50%);
+    left: 50%;
+    top: 50%;
+    -moz-transform: translateX(-50%) translatey(-50%);
+    transform: translateX(-50%) translatey(-50%);
+    background: #CFDEE5;
 }
 
 .pageLoadBox{
@@ -66,10 +101,9 @@ body{
 
 .loopNodesView{
   width: 65%;
-  height: 500px;
   padding:25px; 
   margin-top:-40px; 
-  height:695px;
+  min-height:695px;
   background-color: #395567;
 }
 
@@ -116,10 +150,16 @@ h1, h2, h3, h4{
 } 
 */
 
+.modal-content {
+    color: black;
+}
+
 .btn-xxl {
   padding: 18px 24px;
   font-size: 24px;
   border-radius: 8px;
+  position: relative;
+  top: 25px;
 }
 
 .btn-xl {
@@ -267,6 +307,7 @@ h1, h2, h3, h4{
   top: 87px;
   font-size: 38px;
   opacity: 1; 
+  pointer-events: none;
 }
 
 .btn-rec {
@@ -276,6 +317,7 @@ h1, h2, h3, h4{
   top: 87px;
   font-size: 38px;
   opacity: 1; 
+  pointer-events: none;
 }
 
 
@@ -286,6 +328,7 @@ h1, h2, h3, h4{
   top: 87px;
   font-size: 38px;
   opacity: 1; 
+  pointer-events: none;
 }
 
 .btn-pause {
@@ -293,7 +336,9 @@ h1, h2, h3, h4{
   left: 105px;
   top: 87px;
   font-size: 38px;
-  opacity: 1; }
+  opacity: 1; 
+  pointer-events: none;
+}
 
 .btn-svg {
   position: absolute;
