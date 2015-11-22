@@ -99,22 +99,19 @@ define([
       var hashURL = this.model.get('hashURL');
       var trackName = this.model.get('trackName');
       var modalTitle = '<i class="fa fa-save"></i> Save Complete'
-      var modalBody = '<h5> Share your track</h5><p>' +'<div class="fb-share-button"><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.loopjam.in/%23/tracks/' + hashURL + '" target=_blank><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x"></i></span><a></div> ' + '<div class="twitter-share-button"><a href="https://twitter.com/share?url=http://www.loopjam.in/%23/tracks/' +  hashURL +'" target=_blank><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x"></i></span><a></div> '  + '</p><a target="_blank" href="http://www.loopjam.in/#/tracks/' + hashURL + '" class="trackURL">URL: loopjam.in/#/tracks/' + hashURL + '</a>';
+      var modalBody = '<h5> Share your track</h5><p>' +'<div class="fb-share-button"><a href="https://www.facebook.com/sharer/sharer.php?u=http://www.loopjam.in/%23/tracks/' + hashURL + '" target=_blank><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x"></i></span><a></div> ' + '<div class="twitter-share-button"><a href="https://twitter.com/share?url=http://www.loopjam.in/%23/tracks/' +  hashURL + '&text=Check out a track I recorded at Loopjam.in: " target=_blank><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x"></i></span><a></div><div style="display: inline-block" class="reddit-share-button"><a target="_blank" href="http://www.reddit.com/r/loopjam/submit?url=loopjam.in/%23/tracks/' +  hashURL  +'&title=' + trackName  + '"><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-reddit fa-stack-1x"></i></span></a></div> '  + '</p> <a target="_blank" href="http://www.loopjam.in/#/tracks/' + hashURL + '" class="trackURL">URL: loopjam.in/#/tracks/' + hashURL + '</a>';
       var modalFooter = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
       $(this.el).find('.saved-title').html(modalTitle);
-
       $(this.el).find('.saved-body').html(modalBody);
       $(this.el).find('.saved-footer').html(modalFooter);
     },
 
     disableSave: function() {
-      console.log('disabling the save!');
-      this.$el.find('.btn.btn-default').attr('disabled', true);
+      this.$el.find('.btn-save').attr('disabled', true).removeClass('ani-shake');
     },
 
     enableSave: function() {
-      console.log('about to enable the save button');
-      this.$el.find('.btn.btn-default').attr('disabled', false);
+      this.$el.find('.btn-save').attr('disabled', false).addClass('ani-shake');
     }
   });
 
