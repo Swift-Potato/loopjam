@@ -9,8 +9,19 @@
   </div>
 
  <a href="/#/tracks/new"> <div class="btn btn-xxl btn-danger"><i class="fa fa-circle"></i> Record New Track</div></a>
-    <div class="btn btn-xxl btn-success"><i class="fa fa-video-camera"></i> Watch Example</div>
+  <a href="http://www.youtube.com/watch?v=FTQbiNvZqaY" class="popup-youtube">  <div class="btn btn-xxl btn-success "><i class="fa fa-video-camera"></i> Watch Example</div></a>
   </div>
 
   </div>
   </div>
+
+  <script> 
+   $('.popup-youtube').magnificPopup({
+      disableOn: 700,
+      type: 'iframe',
+      mainClass: 'mfp-fade',
+      removalDelay: 160,
+      preloader: false,
+      fixedContentPos: false
+    });
+</script>
